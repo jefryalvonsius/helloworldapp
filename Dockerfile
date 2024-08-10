@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # Step 3: Copy the application JAR file to the container
-COPY target/HelloWorldApp-1.0-SNAPSHOT.jar app.jar
+COPY target/helloworldapp-0.0.1-SNAPSHOT.jar app.jar
 
 # Step 4: Expose the port that your application runs on
 EXPOSE 8080
