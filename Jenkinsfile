@@ -4,14 +4,12 @@ pipeline {
     environment {
         DOCKER_IMAGE = "jefryalvonsius/helloworldapp"
         DOCKER_REGISTRY = "docker.io" // Docker Hub registry
-        DOCKER_USERNAME = credentials('dockerhub-username') // Jenkins credentials ID for Docker Hub username
-        DOCKER_PASSWORD = credentials('dockerhub-password') // Jenkins credentials ID for Docker Hub password
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: 'github-credentials', url: 'https://github.com/your-username/your-repo.git'
+                git credentialsId: 'github-credentials', url: 'https://github.com/jefryalvonsius/your-repo.git'
             }
         }
 
@@ -27,8 +25,10 @@ pipeline {
             steps {
                 script {
                     sh 'docker build -t $DOCKER_IMAGE .'
-                    sh 'docker login -u jefryalvonsius -p $DOCKER_PASSWORD'
-                    sh 'docker push $DOCKER_IMAGE'
+                    withCredentials([string(credentialsId: 'dockerhub-pat', variable: 'DOCKER_PAT')]) {
+                        sh 'echo $DOCKER_PAT | docker login -u $DOCKER_USERNAME --password-stdin'
+                        sh 'docker push $DOCKER_IMAGE'
+                    }
                 }
             }
         }
@@ -71,7 +71,7 @@ pipeline {
                         app: helloworldapp
                       ports:
                       - protocol: TCP
-                        port: 8181
+                        port: 8282
                         targetPort: 8080
                       type: NodePort
                     EOF
