@@ -26,7 +26,7 @@ pipeline {
                 script {
                     sh 'docker build -t $DOCKER_IMAGE .'
                     withCredentials([string(credentialsId: 'dockerhub-pat', variable: 'DOCKER_PAT')]) {
-                        sh 'echo $DOCKER_PAT | docker login -u $DOCKER_USERNAME --password-stdin'
+                        sh 'echo $DOCKER_PAT | docker login -u jefryalvonsius --password-stdin'
                         sh 'docker push $DOCKER_IMAGE'
                     }
                 }
