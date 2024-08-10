@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "jefryalvonsius/helloworldapp"
         DOCKER_REGISTRY = "docker.io" // Docker Hub registry
-        KUBECONFIG = '/home/jefry/.kube/config'
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
     }
 
     stages {
