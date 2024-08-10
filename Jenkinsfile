@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "your-dockerhub-username/helloworldapp"
+        DOCKER_IMAGE = "jefryalvonsius/helloworldapp"
         DOCKER_REGISTRY = "docker.io" // Docker Hub registry
     }
 
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker build -t $DOCKER_IMAGE .'
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    sh 'docker login -u jefryalvonsius -p $DOCKER_PASSWORD'
                     sh 'docker push $DOCKER_IMAGE'
                 }
             }
@@ -80,7 +80,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_USERNAME = credentials('dockerhub-username') // Jenkins credentials ID for Docker Hub username
+    #    DOCKER_USERNAME = credentials('dockerhub-username') // Jenkins credentials ID for Docker Hub username
         DOCKER_PASSWORD = credentials('dockerhub-password') // Jenkins credentials ID for Docker Hub password
     }
 
